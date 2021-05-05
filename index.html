@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="form-ask-us">
+        <input id="form-ask-us-name" name="ask-us-name" required="" type="text" value="" placeholder="Ваше имя" />
+        <input id="form-ask-us-email" name="ask-us-email" required="" type="email" value="" placeholder="Вaш email" />
+        <textarea id="form-ask-us-text" name="ask-us-text" required="" placeholder="Вaше сообщение"></textarea>
+        <input type="submit" />
+    </form>
+    
+    <script>
+        $('#form-ask-us').submit(function (e) {
+            var popup = $('#popup_text');
+            e.preventDefault();
+            $.ajax({
+                url: "/form_ask_us_ru.php",
+                type: "POST",
+                data: $('#form-ask-us').serialize(),
+                success: function (response) {
+                    //обработка успешной отправки
+                    popup.html('Ваше сообщение успешно отправлено!').delay(2000).fadeOut(1000);
+
+                    $('#form-ask-us-name').val('');
+                    $('#form-ask-us-email').val('');
+                    $('#form-ask-us-text').val('');
+                },
+                error: function (response) {
+                    //обработка ошибок при отправке
+                }
+            });
+        });
+    </script>
+</body>
+</html>
